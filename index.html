@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  </head>
+
+  <body>
+    <div class="buttons-div"></div>
+    <form action="#">
+      <input type="text" id="addBox" name="myInput" placeholder="Search for names..">
+      <input type="submit" id="addButton" value="Add">
+    </form>
+    <div id="giffs"></div>
+
+
+	<script>
+  var cartoons = ["Simpsons", "Volvo", "BMW"];
+ // var myInput = "#myInput";
+
+  $("#addButton").on('click',function(){
+    var searchstring  = $('input[name="myInput"]').val();  
+    cartoons.push(searchstring);
+    console.log(searchstring);
+    var buttons = $('<button>');
+    buttons.text(searchstring); 
+    $('.buttons-div').append(buttons);
+    $('input[name="myInput"]').val(""); 
+	});
+
+  for (i = 0; i < cartoons.length; i++) {
+    var buttons = $('<button>');
+     buttons.text(cartoons[i]); 
+     $('.buttons-div').append(buttons);
+}
+
+  $(".buttons-div").on('click','button', function(){
+    var searchTerm = $(this).text();
+    $.get("https://api.giphy.com/v1/gifs/search", 
+    {
+      api_key: "ZmY876bMHzirbtQLE64EDsUp8tS5gToN",
+      q: searchTerm,
+      limit: 10,      
+    }, function (data) {
+      console.log(data);
+      for (i = 0; i < data.data.length; i++) {
+        var giff = $('<img>').attr('src', data.data[i].embed_url);
+        $("#giffs").append(giff);
+      }
+    })
+  });
+  </script>
+
+  </body>
+
+</html>
+
+
