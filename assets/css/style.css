@@ -3,3 +3,7 @@ img {
     height: 300px;
     margin: 3px;
 }
+
+input[type=text] {
+    margin: 10px;
+}

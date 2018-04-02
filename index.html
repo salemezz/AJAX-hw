@@ -13,13 +13,13 @@
     <div class="buttons-div"></div>
     <form action="#">
       <input type="text" id="addBox" name="myInput" placeholder="Search for names..">
-      <input type="submit" id="addButton" value="Add">
+      <input type="submit" id="addButton" value="Add Cartoon">
     </form>
     <div id="giffs"></div>
 
 
 	<script>
-  var cartoons = ["Simpsons", "Volvo", "BMW"];
+  var cartoons = ["The Simpsons", "Family Guy", "Futurama", "Super Jail", "Rick and Morty", "Adventure Time", "Home Movies", "Metalocalypse"];
  // var myInput = "#myInput";
 
   $("#addButton").on('click',function(){
@@ -39,6 +39,7 @@
 }
 
   $(".buttons-div").on('click','button', function(){
+    $("#giffs").empty();
     var searchTerm = $(this).text();
     $.get("https://api.giphy.com/v1/gifs/search", 
     {
@@ -48,11 +49,27 @@
     }, function (data) {
       console.log(data);
       for (i = 0; i < data.data.length; i++) {
-        var giff = $('<img>').attr('src', data.data[i].embed_url);
-        $("#giffs").append(giff);
+        var giff = $('<img>').attr('src', data.data[i].images.downsized_still.url);
+        $("#giffs").append(giff);       
       }
-    })
+    });
   });
+  $("#giffs").on('click','img', function(){
+          console.log($(this))
+          var status = $(this).attr('data-state');
+          if(status !== 'animated'){
+            $(this).attr('data-state', 'animated');
+            var src = $(this).attr('src').replace("downsized_s.gif", "downsized.gif").replace("giphy_s.gif", "giphy.gif");
+            $(this).attr('src',src);
+          }
+          else{
+
+
+                        $(this).attr('data-state', 'still');
+            var src = $(this).attr('src').replace("downsized.gif", "downsized_s.gif").replace("giphy.gif", "giphy_s.gif");
+            $(this).attr('src',src);
+          }
+        }); 
   </script>
 
   </body>
