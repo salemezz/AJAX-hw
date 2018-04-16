@@ -12,15 +12,16 @@
   <body>
     <div class="buttons-div"></div>
     <form action="#">
-      <input type="text" id="addBox" name="myInput" placeholder="Search for names..">
+      <input type="text" id="addBox" name="myInput" placeholder="Create Giphy Button...">
+      <!-- <p>Click button to generate gifs</p> -->
       <input type="submit" id="addButton" value="Add Cartoon">
     </form>
+    <div id="message-div"></div>
     <div id="giffs"></div>
-
+    
 
 	<script>
   var cartoons = ["The Simpsons", "Family Guy", "Futurama", "Super Jail", "Rick and Morty", "Adventure Time", "Home Movies", "Metalocalypse"];
- // var myInput = "#myInput";
 
   $("#addButton").on('click',function(){
     var searchstring  = $('input[name="myInput"]').val();  
@@ -38,7 +39,11 @@
      $('.buttons-div').append(buttons);
 }
 
+  $("#message-div").append("Click a cartoon to generate gifs.");
+
   $(".buttons-div").on('click','button', function(){
+    $("#message-div").empty();
+    $("#message-div").append("Click a gif to stop and play animation.");
     $("#giffs").empty();
     var searchTerm = $(this).text();
     $.get("https://api.giphy.com/v1/gifs/search", 
